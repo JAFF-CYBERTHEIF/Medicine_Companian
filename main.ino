@@ -40,6 +40,19 @@ const int On_Min_Night = 40;
 const int Off_Hour_Night = 21; //Night alarm OFF time
 const int Off_Min_Night = 30;
 
+//MEDICINE prescription
+const int A_Morning = 2
+const int B_Lunch = 1
+const int C_Night = 1
+
+const int A_Morning = 1
+const int B_Lunch= 2
+const int C_Night = 1
+
+const int A_Morning = 1
+const int B_Lunch = 1
+const int C_Night = 2
+
 
 
 void setup() {
