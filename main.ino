@@ -65,12 +65,112 @@ pinMode(CB,OUTPUT);
 pinMode(CC,OUTPUT);
 pinMode(CD,OUTPUT);
   
-  
-
+}
+//CODE to run Stepper A
+void Awrite(int a,int b,int c,int d){
+digitalWrite(AA,a);
+digitalWrite(AB,b);
+digitalWrite(AC,c);
+digitalWrite(AD,d);
+}
+void Aonestep(){
+Awrite(1,0,0,0);
+delay(1);
+Awrite(1,1,0,0);
+delay(1);
+Awrite(0,1,0,0);
+delay(1);
+Awrite(0,1,1,0);
+delay(1);
+Awrite(0,0,1,0);
+delay(1);
+Awrite(0,0,1,1);
+delay(1);
+Awrite(0,0,0,1);
+delay(1);
+Awrite(1,0,0,1);
+delay(1);
+}
+void A_Rev(){
+int i;
+i=0;
+while(i<NUMBER_OF_STEPS_PER_REV){
+Aonestep();
+i++;
+}
+}
+//CODE to run Stepper B
+void Bwrite(int a,int b,int c,int d){
+digitalWrite(BA,a);
+digitalWrite(BB,b);
+digitalWrite(BC,c);
+digitalWrite(BD,d);
+}
+void Bonestep(){
+Bwrite(1,0,0,0);
+delay(1);
+Bwrite(1,1,0,0);
+delay(1);
+Bwrite(0,1,0,0);
+delay(1);
+Bwrite(0,1,1,0);
+delay(1);
+Bwrite(0,0,1,0);
+delay(1);
+Bwrite(0,0,1,1);
+delay(1);
+Bwrite(0,0,0,1);
+delay(1);
+Bwrite(1,0,0,1);
+delay(1);
+}
+void B_Rev(){
+int i;
+i=0;
+while(i<NUMBER_OF_STEPS_PER_REV){
+Bonestep();
+i++;
+}
+}
+//CODE to run Stepper C
+void Cwrite(int a,int b,int c,int d){
+digitalWrite(CA,a);
+digitalWrite(CB,b);
+digitalWrite(CC,c);
+digitalWrite(CD,d);
+}
+void Conestep(){
+Cwrite(1,0,0,0);
+delay(1);
+Cwrite(1,1,0,0);
+delay(1);
+Cwrite(0,1,0,0);
+delay(1);
+Cwrite(0,1,1,0);
+delay(1);
+Cwrite(0,0,1,0);
+delay(1);
+Cwrite(0,0,1,1);
+delay(1);
+Cwrite(0,0,0,1);
+delay(1);
+Cwrite(1,0,0,1);
+delay(1);
+}
+void C_Rev(){
+int i;
+i=0;
+while(i<NUMBER_OF_STEPS_PER_REV){
+Conestep();
+i++;
+}
 }
 
 void loop() {
   //Read time from RTC and store in 't'
-  t = rtc.getTime();
+t = rtc.getTime();
+  // call A_Rev to rotate Stepper A
+   // call B_Rev to rotate Stepper B
+    // call C_Rev to rotate Stepper C
   
 }
