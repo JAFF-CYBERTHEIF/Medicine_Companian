@@ -1,11 +1,14 @@
-//created by Jawahar B
-//Medicine dispenser 
-#include <DS3231.h>
+#include <Wire.h>
+#include "RTClib.h"
 
+DateTime now;
+char daysOfTheWeek[7][12] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 
-DS3231  rtc(SDA, SCL); // CONNECT RTC SDA-PIN 20 & SCL-PIN 21
-Time t;//char 't' to store current time
-
+RTC_DS3231 rtc;
+const int On_Hour = 19; //Morning alarm ON time
+const int On_Min = 19;
+const int Off_Hour =19; //Morning alarm OFF time
+const int Off_Min = 20;
 #define NUMBER_OF_STEPS_PER_REV 512//512 steps per revolution EDIT THIS TO ADJUST STEPPER 
 
 //Stepper motor 1
@@ -24,60 +27,38 @@ Time t;//char 't' to store current time
 #define CC 12
 #define CD 13
 
-//set alarm times(24 HOUR FORMAT)
-const int On_Hour_Morning = 08; //Morning alarm ON time
-const int On_Min_Morning = 30;
-const int Off_Hour_Morning =08; //Morning alarm OFF time
-const int Off_Min_Morning = 59;
+void setup ()
+{
+  Serial.begin(9600);
+   if (! rtc.begin()) 
+  {
+    Serial.println("Couldn't find RTC Module");
+    while (1);
+  }
 
-const int On_Hour_Lunch = 12; //Lunch alarm ON time
-const int On_Min_Lunch = 30;
-const int Off_Hour_Lunch = 13; //Lunch alarm OFF time
-const int Off_Min_Lunch = 20;
-
-const int On_Hour_Night = 20; //Night alarm ON time
-const int On_Min_Night = 40;
-const int Off_Hour_Night = 21; //Night alarm OFF time
-const int Off_Min_Night = 30;
-
-//MEDICINE prescription
-const int A_Morning = 2
-const int B_Lunch = 1
-const int C_Night = 1
-
-const int A_Morning = 1
-const int B_Lunch= 2
-const int C_Night = 1
-
-const int A_Morning = 1
-const int B_Lunch = 1
-const int C_Night = 2
-
-
-
-void setup() {
-  
-//Begin RTC
-Serial.begin(9600);
-rtc.begin();
-
-//defining OUTPUTS & INPUTS
-
+  if (rtc.lostPower()) 
+  {
+    Serial.println("RTC lost power, lets set the time!");
+    rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+  }
+  rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+  //defining OUTPUTS & INPUTS
+//stepper A
 pinMode(AA,OUTPUT);
 pinMode(AB,OUTPUT);
 pinMode(AC,OUTPUT);
 pinMode(AD,OUTPUT);
-
+//stepper B
 pinMode(BA,OUTPUT);
 pinMode(BB,OUTPUT);
 pinMode(BC,OUTPUT);
 pinMode(BD,OUTPUT);
-
+//stepper C
 pinMode(CA,OUTPUT);
 pinMode(CB,OUTPUT);
 pinMode(CC,OUTPUT);
 pinMode(CD,OUTPUT);
-  
+ 
 }
 //CODE to run Stepper A
 void Awrite(int a,int b,int c,int d){
@@ -179,11 +160,18 @@ i++;
 }
 }
 
-void loop() {
-  //Read time from RTC and store in 't'
-t = rtc.getTime();
-  // call A_Rev to rotate Stepper A
-   // call B_Rev to rotate Stepper B
-    // call C_Rev to rotate Stepper C
-  
+void loop () 
+{
+  now = rtc.now();
+  Serial.print(now.hour());
+  Serial.print(':');
+  Serial.print(now.minute());
+  Serial.print(':');
+  Serial.print(now.second());
+  Serial.println(" ");
+  if (now.hour() == On_Hour && now.minute() == On_Min){
+  A_Rev();
+  A_Rev();
+  B_Rev();
+}
 }
