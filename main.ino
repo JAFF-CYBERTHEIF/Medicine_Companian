@@ -5,12 +5,14 @@ DateTime now;
 char daysOfTheWeek[7][12] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 
 RTC_DS3231 rtc;
-const int On_Hour = 19; //Morning alarm ON time
-const int On_Min = 19;
+const int On_Hour = 17; //Morning alarm ON time
+const int On_Min = 48;
 const int Off_Hour =19; //Morning alarm OFF time
 const int Off_Min = 20;
 #define NUMBER_OF_STEPS_PER_REV 512//512 steps per revolution EDIT THIS TO ADJUST STEPPER 
 
+//buzzer
+#define buzzer 22
 //Stepper motor 1
 #define AA 2
 #define AB 3
@@ -43,6 +45,8 @@ void setup ()
   }
   rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
   //defining OUTPUTS & INPUTS
+  
+pinMode(buzzer,OUTPUT);  
 //stepper A
 pinMode(AA,OUTPUT);
 pinMode(AB,OUTPUT);
@@ -170,8 +174,11 @@ void loop ()
   Serial.print(now.second());
   Serial.println(" ");
   if (now.hour() == On_Hour && now.minute() == On_Min){
+    digitalWrite(buzzer,HIGH);
+    delay(2000);
   A_Rev();
   A_Rev();
   B_Rev();
+  C_Rev();
 }
 }
