@@ -8,7 +8,7 @@ MEDICINE COMPANIAN
 
   <h1><b> COMPONENTS REQUIRED</b></h1>
 <ul>
-  <li>Arduino MEGE</li>
+  <li>Arduino MEGA</li>
   <li>DS3231 RTC Module</li>
   <li>28 BY-J 48 stepper motor</li>
   <li>ULN2003 Stepper motor driver</li>
