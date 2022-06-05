@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>MEDICINE COMPANIAN</title>
+MEDICINE COMPANIAN
 </head>
 <body>
 
