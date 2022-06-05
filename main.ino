@@ -5,29 +5,31 @@ DateTime now;
 char daysOfTheWeek[7][12] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 
 RTC_DS3231 rtc;
-const int On_Hour = 17; //Morning alarm ON time
+const int On_Hour = 21; //Morning alarm ON time
 const int On_Min = 48;
-const int Off_Hour =19; //Morning alarm OFF time
-const int Off_Min = 20;
-#define NUMBER_OF_STEPS_PER_REV 512//512 steps per revolution EDIT THIS TO ADJUST STEPPER 
+
+#define NUMBER_OF_STEPS_PER_REV 256//512 steps per revolution EDIT THIS TO ADJUST STEPPER 
 
 //buzzer
 #define buzzer 22
-//Stepper motor 1
-#define AA 2
-#define AB 3
-#define AC 4
-#define AD 5
+//green light
+#define green 23
+
+//stepper motor 1
+#define AB 2
+#define AA 3
+#define AD 4
+#define AC 5
 //stepper motor 2
-#define BA 6
-#define BB 7
-#define BC 8
-#define BD 9
+#define BB 6
+#define BA 7
+#define BD 8
+#define BC 9
 //stepper motor 3
-#define CA 10
-#define CB 11
-#define CC 12
-#define CD 13
+#define CB 10
+#define CA 11
+#define CD 12
+#define CC 13
 
 void setup ()
 {
@@ -173,12 +175,16 @@ void loop ()
   Serial.print(':');
   Serial.print(now.second());
   Serial.println(" ");
-  if (now.hour() == On_Hour && now.minute() == On_Min){
+  if (now.hour() == On_Hour && now.minute() == On_Min && now.second()==0){
+    digitalWrite(green, HIGH);
     digitalWrite(buzzer,HIGH);
     delay(2000);
-  A_Rev();
+    digitalWrite(buzzer,LOW);
+    digitalWrite(green, HIGH);
   A_Rev();
   B_Rev();
+  B_Rev();
   C_Rev();
+  
 }
 }
